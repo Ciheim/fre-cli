@@ -30,6 +30,7 @@ fre app
 fre catalog
 ===============
 
+For information on the catalog builder tool, please see its offical `documentation <https://noaa-gfdl.github.io/CatalogBuilder/>`_
 .. include:: tools/catalog.rst
 
 
