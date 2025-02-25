@@ -1,9 +1,9 @@
 Post-Processing Container
 =========================
 
-Previously, many GFDL workflows and configurations have only been accessible on gitlab. This is disadvantageous for outside collaboration, flexibility, community development. While the FRE workflow can now be conda installed, another deployment method of containerization has been developed. Containerzation of the FRE workflow at GFDL bolsters portability while also simplifying the environment set-up for the user. With the environment set-up done through the container build and runscript, this post-processing container work allows for more effective sharing of the workflow.
+Previously, many GFDL workflows and configurations have only been accessible on gitlab. This is disadvantageous for outside collaboration, flexibility, community development. While the FRE workflow can now be conda installed, another deployment method of containerization has been developed. Containerzation of the FRE workflow at GFDL bolsters portability while also simplifying the environment set-up for the user. With the environment set-up done through the container build and runscript, this post-processing container work allows for more effective sharing of the workflow. 
 
-BUILDING
+Building
 --------
 
 In order to build the container, the user needs to have podman access on gaea. If needed, put in a helpdesk ticket.
@@ -44,10 +44,9 @@ Using podman and apptainer to build, follow these steps:
 5. Create the singularity image file (sif) from the tar file
 
 .. code-block:: console
-
  apptainer build --disable-cache [name of container].sif docker-archive://[name of container].tar
 
-SETUP
+Setup
 -----
 
 Now that the FRE workflows container is created, certain files and directories must be made accessible.
@@ -56,10 +55,10 @@ Now that the FRE workflows container is created, certain files and directories m
 
 In order to run the post-processing workflow, certain repositories and files are needed:
 
-1. fre-workflows cloned repository
+1. Fre-workflows cloned repository
     - Can be found `here <https://github.com/NOAA-GFDL/fre-workflows>`_
 
-2. Directory that will include folders and files for container set-up and running (could be named ppp-setup for example)
+2. Directory that will include folders and files for container set-up and running (named ppp-setup, for example)
     - The setup/output directory consists of a few subdirectories: pp, ptmp, and temp (these are created through the runscript.sh in this repository for the container)
     - Ensure you create the empty ppp-setup folder in an area with enough space as this is where the post-processing run output will be populated.
 
@@ -89,7 +88,7 @@ Regarding the yaml configurations, some paths need to be edited to reference the
     - pp_dir: "/mnt/pp"
     - ptmp_dir: "/mnt/ptmp"
 
-RUNNING
+Running
 -------
 To run the container, follow these steps:
 
@@ -100,7 +99,7 @@ To run the container, follow these steps:
 
 .. code-block:: console
 
-   apptainer exec --writable-tmpfs --bind [Path/to/setup/folder]:/mnt --bind [Path/to/fre-worflows]:/mnt2 --bind [Path/to/gridspec location]:/mnt/[experiment-name]_grid:ro --bind [Path/to/history/files]:/mnt/history:ro [Path/to/created/container] /app/exec/runscript.sh
+ apptainer exec --writable-tmpfs --bind [Path/to/setup/folder]:/mnt --bind [Path/to/fre-worflows]:/mnt2 --bind [Path/to/gridspec location]:/mnt/[experiment-name]_grid:ro --bind [Path/to/history/files]:/mnt/history:ro [Path/to/created/container] /app/exec/runscript.sh
 
 NOTE: It is essential that binding is done correctly as the container’s runscript relies heavily on these paths.
 
@@ -112,7 +111,7 @@ Here,
 
 The experiment will be installed, configuration files will be validated, and the experiment should kick off.
 
-REVIEW
+Review
 ------
 
 The setup-output directory created earlier will hold pp output for review. It will also hold a newly created cylc-run directory.
