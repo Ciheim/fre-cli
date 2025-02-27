@@ -21,30 +21,31 @@ Using podman and apptainer to build, follow these steps:
 
 .. code-block:: console
 
- git clone git@gitlab.gfdl.noaa.gov:fre/HPC-ME.git
+   git clone git@gitlab.gfdl.noaa.gov:fre/HPC-ME.git
 
 2. Navigate into the ppp folder
 
 .. code-block:: console
 
- cd HPC-ME/ppp
+    cd HPC-ME/ppp
 
 3. Build a container image
 
 .. code-block:: console
 
- podman build -f Dockerfile-ppp -t 2025
+   podman build -f Dockerfile-ppp -t 2025
 
 4. Save the image to a local tar file (It is recommended to name the container after the post-processing experiment name)
 
 .. code-block:: console
 
- podman save -o [name of container].tar localhost/2025
+   podman save -o [name of container].tar localhost/2025
 
 5. Create the singularity image file (sif) from the tar file
 
 .. code-block:: console
- apptainer build --disable-cache [name of container].sif docker-archive://[name of container].tar
+
+   apptainer build --disable-cache [name of container].sif docker-archive://[name of container].tar
 
 Setup
 -----
