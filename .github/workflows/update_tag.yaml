@@ -50,3 +50,10 @@ jobs:
           delete-branch: true          # delete afer merge
           title: Update refs to version number post-release
           body: automated change, replaces references to the old version number with the new version number upon releases. This PR will need to be closed and reopened to run CI testing.
+      
+  call-reusable-external:
+    needs: tag-update
+    uses: CIHEIM/HPC-ME-TEST/.github/workflows/receive_tag.yml@main
+    with:
+      new_tag: ${{ needs['tag-update'].outputs.new_tag }}
+      old_tag: ${{ needs['tag-update'].outputs.old_tag }}
