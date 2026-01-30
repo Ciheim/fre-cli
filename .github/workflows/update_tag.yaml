@@ -56,7 +56,7 @@ jobs:
       
   call-reusable-external:
     needs: tag-update
-  uses: CIHEIM/HPC-ME-TEST/.github/workflows/receive_tag.yml@main
-  with:
-    new_tag: ${{ needs['tag-update'].outputs.new_tag }}
-    old_tag: ${{ needs['tag-update'].outputs.old_tag }}
+    uses: CIHEIM/HPC-ME-TEST/.github/workflows/receive_tag.yml@main
+    with:
+      new_tag: ${{ needs['tag-update'].outputs.new_tag }}
+      old_tag: ${{ needs['tag-update'].outputs.old_tag }}
