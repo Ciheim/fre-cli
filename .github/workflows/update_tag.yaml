@@ -1,9 +1,11 @@
 name: Update Tag Version References
- 
+
 on:
   push:
     tags:
       - '*'
+  # optional for manual testing:
+  # workflow_dispatch: {}
 
 jobs:
   tag-update:
@@ -14,7 +16,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        
+
       - name: Fetch tags
         run: |
           git fetch --tags origin
@@ -47,15 +49,15 @@ jobs:
       - name: Create pull request
         uses: peter-evans/create-pull-request@v7.0.6
         with:
-          base: main                   # creates a new branch off of main
-          branch: update-version-post-release # name of the created branch
-          branch-suffix: timestamp     # add a timestamp to branch name
-          delete-branch: true          # delete afer merge
+          base: main
+          branch: update-version-post-release
+          branch-suffix: timestamp
+          delete-branch: true
           title: Update refs to version number post-release
           body: automated change, replaces references to the old version number with the new version number upon releases. This PR will need to be closed and reopened to run CI testing.
-      
+
   call-reusable-external:
-    needs: tag-update
+    needs: [tag-update]
     uses: CIHEIM/HPC-ME-TEST/.github/workflows/receive_tag.yml@main
     with:
       new_tag: ${{ needs['tag-update'].outputs.new_tag }}
