@@ -67,7 +67,7 @@ jobs:
           # Set this secret in your repository settings (e.g. EXTERNAL_REPO_TOKEN).
           token: ${{ secrets.EXTERNAL_REPO_TOKEN }}
           repository: Ciheim/HPC-ME-TEST
-          event-type: receive_tag
+          event-type: trigger-rebuild
           client-payload: |
             {
               "new_tag": "${{ needs.tag-update.outputs.new_tag }}",
