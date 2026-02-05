@@ -56,9 +56,19 @@ jobs:
           title: Update refs to version number post-release
           body: automated change, replaces references to the old version number with the new version number upon releases. This PR will need to be closed and reopened to run CI testing.
 
-  call-reusable-external:
+  send-repository-dispatch:
     needs: [tag-update]
-    uses: Ciheim/HPC-ME-TEST/.github/workflows/receive_tag.yml@main
-    with:
-      new_tag: ${{ needs['tag-update'].outputs.new_tag }}
-      old_tag: ${{ needs['tag-update'].outputs.old_tag }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send repository_dispatch to external repo
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          # Token must have permissions to create repository_dispatch on the target repo.
+          # Set this secret in your repository settings (e.g. EXTERNAL_REPO_TOKEN).
+          token: ${{ secrets.EXTERNAL_REPO_TOKEN }}
+          repository: Ciheim/HPC-ME-TEST
+          event-type: receive_tag
+          client-payload: |
+            {
+              "new_tag": "${{ needs.tag-update.outputs.new_tag }}",
+              "old_tag": "${{ needs.tag-update.outputs.old_tag }}"
