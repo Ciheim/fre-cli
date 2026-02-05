@@ -72,3 +72,4 @@ jobs:
             {
               "new_tag": "${{ needs.tag-update.outputs.new_tag }}",
               "old_tag": "${{ needs.tag-update.outputs.old_tag }}"
+            }
