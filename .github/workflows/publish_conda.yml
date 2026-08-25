@@ -69,6 +69,9 @@ jobs:
           echo "printing conda config just in case"
           conda config --show
 
+          echo "switch to classic solver"
+          conda config --set solver classic
+
       - name: Update Conda and Conda Package Indices
         run: |
           echo "updating conda and package channel indices for conda-forge, noaa-gfdl"
